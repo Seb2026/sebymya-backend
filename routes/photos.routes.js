@@ -6,9 +6,10 @@ const Photo = require("../models/Photo.model");
 const User = require("../models/User.model");
 
 router.post("/photos", (req, res, next) => {
-  const { year } = req.body;
+  const { year, imageUrl } = req.body;
   Photo.create({
     year,
+    imageUrl,
   })
     .then((res) => {
       res.json(res);

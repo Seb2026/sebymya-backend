@@ -25,6 +25,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+//Sessions
+app.use(
+  session({
+    secret: "some secret goes here",
+    resave: true,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 7200000, //120 min (120 * 60 * 1000ms)
+    },
+  })
+);
+
 // Express View engine setup
 app.use(
   require("node-sass-middleware")({
@@ -62,6 +74,7 @@ app.use(
 app.use("/", require("./routes/index.routes"));
 app.use("/", require("./routes/photos.routes"));
 app.use("/", require("./routes/file-upload.routes"));
+app.use("/", require("./routes/auth.routes"));
 
 app.use((req, res, next) => {
   // If no routes match, send them the React HTML.
